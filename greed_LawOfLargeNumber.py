@@ -1,13 +1,18 @@
+import time
+
 n, m, k = map(int, input().split())       # 공백으로 구분하여 입력으로 n, m, k를 받는다 ( map(type, 대상)은 대상을 type으로 변환해준다. )
 data = list(map(int, input().split()))    # data값도 입력받아 map으로 변환 list로 배열화 시킨다.
 
-data.sort()         # 입력받은 수들 정렬하기
-first = data[n-1]   # 첫 번째 큰 수
-second = data[n-2]  # 두 번째 큰 수
+start_time = time.time()                  # 보통 연산 횟수가 10억을 넘어가면 c언어를 기준으로 1초가 소요된다
+                                          # So, n
+
+data.sort()                               # 입력받은 수들 정렬하기
+first = data[n-1]                         # 첫 번째 큰 수
+second = data[n-2]                        # 두 번째 큰 수
 
 
 # 가장 큰 수 가 더해진 횟수 계산
-count = int( m / ( k + 1)) * k              #
+count = int( m / ( k + 1)) * k
 count += m % ( k + 1 )
 
 
@@ -29,7 +34,8 @@ while True:
     result += second
     m -= 1
 
-
+end_time = time.time()
 
 print(result)
 print(result_count)
+print(end_time - start_time)            # 성능 측정
