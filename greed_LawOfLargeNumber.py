@@ -12,25 +12,23 @@ second = data[n-2]                        # 두 번째 큰 수
 
 
 # 가장 큰 수 가 더해진 횟수 계산
-count = int( m / ( k + 1)) * k
-count += m % ( k + 1 )
+count = int(m / (k + 1)) * k
+count += m % (k + 1)
 
 
 result = 0
 result_count = 0
-result_count += (count) * first
+result_count += count * first
 result_count += (m - count) * second
-
-
 
 while True:
     for i in range(k):                  # 해당 수 최대 반복 횟수 만큼 첫 번째 큰 수를 더하고
-        if m==0:                        # but, 만약 해당 수 최대 반복 횟수 이전에 숫자가 더해져야되는 횟수가 0이 되면 break
-            break;
+        if m == 0:                        # but, 만약 해당 수 최대 반복 횟수 이전에 숫자가 더해져야되는 횟수가 0이 되면 break
+            break
         result += first                 # 결과에 +
         m -= 1                          # 더한 횟수 -
-    if m==0:
-        break;
+    if m == 0:
+        break
     result += second
     m -= 1
 
