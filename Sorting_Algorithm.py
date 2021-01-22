@@ -13,6 +13,22 @@ for i in range(len(array)):
 print(array)
 
 array2 = [3, 5]
-array[0], array[1] = array[1], array[0]         # 파이썬의 스와프 공식이다
+array2[0], array2[1] = array2[1], array2[0]         # 파이썬의 스와프 공식이다
 
 print(array2)
+
+
+# 삽입정렬
+# 특정한 데이터가 적절한 위치에 들어가기 이전에 , 그 앞까지의 데이터는 이미 정렬되어 있다고 가정한다.
+# 이전의 정렬된 데이터와 비교하여 적절한 위치에 위치시킨다.
+
+array3 = [7, 5, 9, 0, 3, 1, 6, 2, 4, 8]
+
+for i in range(len(array3)):
+    for j in range(i, 0, -1):   # 인덱스 i 부터 0까지 감소하며 반복
+        if array3[j] < array3[j - 1]:
+            array3[j], array3[j - 1] = array3[j - 1], array3[j]
+        else:
+            break
+
+print(array3)
