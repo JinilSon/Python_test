@@ -1,7 +1,6 @@
-# 이진탐색이란? : 리스트 내에서 데이터를 매우 빠르게 탐색하는 알고리즘
+# 이진탐색이란? : 리스트 내에서 데이터를 매우 빠르게 탐색하는 알고리즘(시간 복잡도는 O(logN))
 
-# 순차탐색
-
+# # 순차탐색(시간 복잡도는 O(N))
 # #           n = 문자열의 길이, target = 찾으려는 문자열, array = 배열
 # def sequential_search(n, target, array):
 #     for i in range(n):
@@ -20,7 +19,8 @@
 # print(sequential_search(n, target, array))
 
 
-# 이진탐색은 변수 3개(시작점, 끝점, 중간점)을 이용하여 반복적으로 비교하여 찾는 탐색과정이다.
+# # 이진탐색은 변수 3개(시작점, 끝점, 중간점)을 이용하여 반복적으로 비교하여 찾는 탐색과정이다.
+# # 재귀함수를 이용한 구현
 # def binary_search(array, target, start, end):
 #     if start > end:
 #         return None
