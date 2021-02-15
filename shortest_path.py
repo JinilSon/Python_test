@@ -49,7 +49,7 @@
 #     else:
 #         print(distance[i])
 
-# improved dijkstra 알고리즘
+# improved dijkstra 알고리즘(그리디 알고리즘)
 # 힙 자료구조를 이용하게 되면 특정 노드까지의 최단 거리에 대한 정보를 힙에 담아서 처리하므로
 # 출발 노드로부터 가장 거리가 짧은 노드를 더욱 빠르게 찾을 수 있다.
 # 최악의 경우에도 시간 복잡도 O(ElogV)를 보장하여 해결 할 수 있다.(여기서 E는 간선의 개수이다.)
@@ -66,44 +66,82 @@
 # 파이썬의 우선순위 큐 라이브러리는 최소 힙에 기반한다는 점을 기억해야 한다.
 # 우선순위 큐 방식은 리스트와 달리 튜플 방식으로 큐에 넣는다.
 
-import heapq
-import sys
-input = sys.stdin.readline              # input을 sys의 readline으로 대체하여 처리시간 단축
-INF = int(1e9)                          # 무한을 의미하는 값으로 초기화(후에 더 작은 값이 오면 대체하기 위해)
+# import heapq
+# import sys
+# input = sys.stdin.readline              # input을 sys의 readline으로 대체하여 처리시간 단축
+# INF = int(1e9)                          # 무한을 의미하는 값으로 초기화(후에 더 작은 값이 오면 대체하기 위해)
+#
+# n, m = map(int, input().split())        # 노드의 개수, 간선의 개수
+# start = int(input())
+# graph = [[] for i in range(n + 1)]      # 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트
+# distance = [INF] * (n + 1)              # 최단 거리 테이블을 모두 무한대로 초기화
+#
+# for _ in range(m):
+#     a, b, c = map(int, input().split()) # a번 노드에서 b번 노드로 가는 비용이 c라는 의미
+#     graph[a].append((b, c))             # (b, c)라는 튜플 형식으로 추가
+#
+#
+# def dijkstra(start):
+#     q = []                              # 시작 노드로 가기 위한 최단 경로는 0으로 설정하며, 큐에 삽입
+#     heapq.heappush(q, (0, start))       # 거리:0, 연결노드:start 노드(0)  큐에 삽입
+#     distance[start] = 0                 # 리스트 0의 값의 간선길이를 0으로 초기화
+#     while q:                            # 큐가 비어있지 않다면,,
+#         dist, now = heapq.heappop(q)    # 큐에서 pop 처리를 하여 거리와 현재노드를 구함
+#         if distance[now] < dist:        # 이미 처리 된적이 있는 노드일 경우 무시
+#             continue
+#         for i in graph[now]:            # 현재 노드와 다른 인접한 노드들을 확인
+#             cost = dist + i[1]
+#             if cost < distance[i[0]]:   # 현재 노드를 거쳐, 다른 노드로 이동하는 거리가 더 짧은 경우(갱신될 값이 리스트에 들어있는 값보다 작을 경우)
+#                 distance[i[0]] = cost   #
+#                 heapq.heappush(q, (cost, i[0]))
+#
+# dijkstra(start)
+#
+# for i in range(1, n + 1):
+#     if distance[i] == INF:
+#         print("INFINITY")
+#     else:
+#         print(distance[i])
+#
+# # 해당 식에서는 우선순위 큐와 최단거리 테이블, 노드들의 정보가 있는 리스트들의 구조를 헷갈리지 말아야 한다.
+# # 우선순위 큐의 구조(heapq) : (비용, 노드)
+# # 노드 정보 리스트(graph)의 구조 : [a노드][(b노드, b노드 로의 길이)]
+# # 최단거리 테이블의 구조(distance) : distance[노드] = 최단거리 값
 
-n, m = map(int, input().split())        # 노드의 개수, 간선의 개수
-start = int(input())
-graph = [[] for i in range(n + 1)]      # 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트
-distance = [INF] * (n + 1)              # 최단 거리 테이블을 모두 무한대로 초기화
-
-for _ in range(m):
-    a, b, c = map(int, input().split()) # a번 노드에서 b번 노드로 가는 비용이 c라는 의미
-    graph[a].append((b, c))             # (b, c)라는 튜플 형식으로 추가
 
 
-def dijkstra(start):
-    q = []                              # 시작 노드로 가기 위한 최단 경로는 0으로 설정하며, 큐에 삽입
-    heapq.heappush(q, (0, start))       # 거리:0, 연결노드:start 노드(0)  큐에 삽입
-    distance[start] = 0                 # 리스트 0의 값의 간선길이를 0으로 초기화
-    while q:                            # 큐가 비어있지 않다면,,
-        dist, now = heapq.heappop(q)    # 큐에서 pop 처리를 하여 거리와 현재노드를 구함
-        if distance[now] < dist:        # 이미 처리 된적이 있는 노드일 경우 무시
-            continue
-        for i in graph[now]:            # 현재 노드와 다른 인접한 노드들을 확인
-            cost = dist + i[1]
-            if cost < distance[i[0]]:   # 현재 노드를 거쳐, 다른 노드로 이동하는 거리가 더 짧은 경우(갱신될 값이 리스트에 들어있는 값보다 작을 경우)
-                distance[i[0]] = cost   #
-                heapq.heappush(q, (cost, i[0]))
 
-dijkstra(start)
+# 플로이드 워셜 알고리즘(다이나믹 알고리즘)
+# : 모든 지점에서 다른 모든 지점까지의 최단 경로를 모두 구해야 하는 경우에 사용할 수 있는 알고리즘
+# 시간 복잡도 : O(N의 세제곱)
+# 2차원 리스트에 최단 거리 정보를 담는다는 특징이 있다.
 
-for i in range(1, n + 1):
-    if distance[i] == INF:
-        print("INFINITY")
-    else:
-        print(distance[i])
+INF = int(1e9)
 
-# 해당 식에서는 우선순위 큐와 최단거리 테이블, 노드들의 정보가 있는 리스트들의 구조를 헷갈리지 말아야 한다.
-# 우선순위 큐의 구조(heapq) : (비용, 노드)
-# 노드 정보 리스트(graph)의 구조 : [a노드][(b노드, b노드 로의 길이)]
-# 최단거리 테이블의 구조(distance) : distance[노드] = 최단거리 값
+n = int(input())
+m = int(input())
+
+graph = [[INF] * (n + 1) for _ in range(n + 1)]         # 2차원 리스트(그래프), 모든 값들을 무한으로 초기화
+
+for a in range(1, n + 1):                               # 자기자신으로 가는 비용은 0으로 초기화
+    for b in range(1, n + 1):
+        if a == b:
+            graph[a][b] = 0
+
+for _ in range(m):                                      # A에서 B로 가는 비용은 C라고 설정
+    a, b, c = map(int, input().split())
+    graph[a][b] = c
+
+for k in range(1, n + 1):                               # k = 거쳐가는 노드
+    for a in range(1, n + 1):                           # 시작노드
+        for b in range(1, n + 1):                       # 도착노드
+            graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+
+for a in range(1, n + 1):
+    for b in range(1, n + 1):
+        if graph[a][b] == INF:
+            print("INFINITY", end=" ")
+        else:
+            print(graph[a][b], end=" ")
+    print()
+
