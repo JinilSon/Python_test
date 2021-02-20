@@ -20,3 +20,38 @@
 #           A와 B의 루트 노드 A', B'를 각각 찾는다.
 #           A'를 B'의 부모 노드로 설정한다.(B'가 A'를 가르키도록)
 # 2. 모든 union 연산을 처리할 때까지, 1번 과정을 반복한다.
+
+# 기본적인 서로소 집합 알고리즘
+def find_parent(parent, x):
+    if parent[x] != x:                              # 루트 노드를 찾을 때까지 재귀적으로 호출
+        return find_parent(parent, parent[x])
+    return x
+
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+v, e = map(int, input().split())
+parent = [0] * (v + 1)
+
+for i in range(1, v + 1):                            # parent 노드 리스트 초기화
+    parent[i] = i
+
+for i in range(e):
+    a, b = map(int, input().split())
+    union_parent(parent, a, b)
+
+print('각 원소가 속한 집합 : ', end=' ')                 # 각 원소가 속한 집합은 연결되어 있는 서로소 들의 집합에서 제일 작은 수를 지칭
+for i in range(1, v + 1):
+    print(find_parent(parent, i), end=' ')
+
+print()
+
+print('부모 테이블 : ', end=' ')                        # 부모 테이블이란, 연결된 서로소 집합 중 작은 수들을 표출
+for i in range(1, v + 1):
+    print(parent[i], end=' ')
