@@ -55,3 +55,12 @@ print()
 print('부모 테이블 : ', end=' ')                        # 부모 테이블이란, 연결된 서로소 집합 중 작은 수들을 표출
 for i in range(1, v + 1):
     print(parent[i], end=' ')
+
+
+
+# 위의 코드는 find 함수가 1, 2, 3, 4, 5 순서대로 처리를 함으로써 비효율적이다 ( O(VM))
+# 이는 경로 압축기법으로 바로 개선시킬 수 있다
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
