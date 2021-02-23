@@ -60,7 +60,53 @@ for i in range(1, v + 1):
 
 # 위의 코드는 find 함수가 1, 2, 3, 4, 5 순서대로 처리를 함으로써 비효율적이다 ( O(VM))
 # 이는 경로 압축기법으로 바로 개선시킬 수 있다
+
 def find_parent(parent, x):
     if parent[x] != x:
         parent[x] = find_parent(parent, parent[x])
     return parent[x]
+
+
+# 서로소 집합은 다양한 알고리즘에 사용될 수 있다.
+# 서로소 집합은 무방향 그래프 내에서의 사이클을 판별할 때 사용할 수 있다는 특징이 있다.
+# ( 참고로 방향 그래프에서의 사이클 여부는 DFS를 이용하여 판별가능하다)
+# 서로소 집합을 활용한 사이클 판별
+# 1. 각 간선을 확인하며 두 노드의 루트 노드를 확인한다.
+#   루트 노드가 서로 다르다면 두 노드에 대하여 union 연산을 수행한다.
+#   루트 노드가 서로 같다면 사이클이 발생한 것이다.
+# 2. 그래프에 포함되어 있는 모든 간선에 대하여 1번 과정을 수행한다.
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+        return parent[x]
+
+
+def union_parent(parent ,a ,b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+v, e = map(int, input().split())
+parent = [0] * (v + 1)      # 부모 테이블 초기화
+
+for i in range(1, v + 1):   # 부모 테이블 상에서, 자기 자신으로 초기화
+    parent[i] = i
+
+cycle = False
+
+for i in range(e):
+    a, b = map(int, input().split())
+    if find_parent(parent, a) == find_parent(parent ,b):
+        cycle = True
+        break
+    else:
+        union_parent(parent, a, b)
+
+if cycle:
+    print("사이클 발생!")
+else:
+    print("사이클이 발생하지 않았습니다.")
